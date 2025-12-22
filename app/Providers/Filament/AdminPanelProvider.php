@@ -59,6 +59,7 @@ class AdminPanelProvider extends PanelProvider
                 PasskeysPlugin::make(),
             ])
             ->profile()
-            ->registration();
+            ->registration()
+            ->emailVerification();
     }
 }
