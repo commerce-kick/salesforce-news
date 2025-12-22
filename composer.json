@@ -13,10 +13,12 @@
         "inertiajs/inertia-laravel": "^2.0",
         "laravel/fortify": "^1.30",
         "laravel/framework": "^12.0",
+        "laravel/octane": "^2.13",
         "laravel/tinker": "^2.10.1",
         "laravel/wayfinder": "^0.1.9",
         "marcelweidum/filament-passkeys": "^2.0",
         "nunomaduro/essentials": "^1.0",
+        "resend/resend-laravel": "^1.1",
         "willvincent/laravel-unique": "^1.2"
     },
     "require-dev": {
