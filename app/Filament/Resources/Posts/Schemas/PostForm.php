@@ -8,6 +8,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\SpatieTagsInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Set;
 use Filament\Schemas\Schema;
 use Illuminate\Support\Str;
@@ -31,6 +32,8 @@ class PostForm
                 ->helperText('Auto-generated from title, but you can customize it.')
                 ->live(debounce: 300) // Slugify as user types (with delay)
                 ->afterStateUpdated(fn($set, ?string $state) => $set('slug', Str::slug($state))),
+
+            Toggle::make('is_published')->label('Published')->default(false),
 
             RichEditor::make('content')
                 ->required()

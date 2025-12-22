@@ -17,14 +17,20 @@ return new class extends Migration {
             $table->string('title');
             $table->jsonb('content')->nullable();
             $table->string('category')->default('post');
+            $table->boolean('is_published')->default(false);
             $table->timestamps();
 
-            // Add indexes
-            $table->index('user_id'); // For filtering by user
-            $table->index('category'); // For filtering by category
-            $table->index('created_at'); // For sorting by date
-            $table->index(['user_id', 'category']); // Composite index for user + category queries
-            $table->index(['category', 'created_at']); // For category listings sorted by date
+            // Indexes for performance
+            $table->index('user_id');
+            $table->index('category');
+            $table->index('is_published');
+            $table->index('created_at');
+
+            // Composite indexes for common queries
+            $table->index(['is_published', 'created_at']); // Published posts sorted by date
+            $table->index(['category', 'is_published']); // Published posts by category
+            $table->index(['user_id', 'is_published']); // User's published posts
+            $table->index(['user_id', 'category']); // User's posts in category
         });
     }
 

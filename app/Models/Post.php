@@ -25,6 +25,7 @@ class Post extends Model implements HasRichContent, HasMedia
         'title',
         'content',
         'category',
+        'is_published',
     ];
 
     /**
@@ -34,6 +35,7 @@ class Post extends Model implements HasRichContent, HasMedia
     {
         return [
             'content' => 'array',
+            'is_published' => 'boolean',
         ];
     }
 
@@ -45,5 +47,10 @@ class Post extends Model implements HasRichContent, HasMedia
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function scopePublished($query)
+    {
+        return $query->where('is_published', true);
     }
 }
