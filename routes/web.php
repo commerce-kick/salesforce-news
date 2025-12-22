@@ -16,4 +16,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('dashboard');
 });
 
+Route::passkeys();
+
+
 require __DIR__.'/settings.php';
