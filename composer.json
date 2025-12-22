@@ -16,7 +16,8 @@
         "laravel/tinker": "^2.10.1",
         "laravel/wayfinder": "^0.1.9",
         "marcelweidum/filament-passkeys": "^2.0",
-        "nunomaduro/essentials": "^1.0"
+        "nunomaduro/essentials": "^1.0",
+        "willvincent/laravel-unique": "^1.2"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

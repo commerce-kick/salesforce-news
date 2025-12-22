@@ -28,7 +28,6 @@ class PostForm
             TextInput::make('slug')
                 ->required()
                 ->maxLength(255)
-                ->unique(ignoreRecord: true)
                 ->helperText('Auto-generated from title, but you can customize it.')
                 ->live(debounce: 300) // Slugify as user types (with delay)
                 ->afterStateUpdated(fn($set, ?string $state) => $set('slug', Str::slug($state))),

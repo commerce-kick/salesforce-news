@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
+use App\Enums\CategoryTypes;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -38,6 +39,7 @@ class HandleInertiaRequests extends Middleware
     {
         [$message, $author] = str(Inspiring::quotes()->random())->explode('-');
 
+
         return [
             ...parent::share($request),
             'name' => config('app.name'),
@@ -45,7 +47,7 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $request->user(),
             ],
-            'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
+             'categories' => array_column(CategoryTypes::cases(), 'value'),
         ];
     }
 }

@@ -9,10 +9,15 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Tags\HasTags;
+use WillVincent\LaravelUnique\HasUniqueNames;
 
 class Post extends Model implements HasRichContent, HasMedia
 {
-    use HasTags, InteractsWithRichContent, InteractsWithMedia;
+    use HasTags, InteractsWithRichContent, InteractsWithMedia, HasUniqueNames;
+
+    protected $uniqueField = 'slug';
+    protected $constraintFields = ['user_id'];
+    protected $uniqueSuffixFormat = '-{n}';
 
     protected $fillable = [
         'user_id',
@@ -35,5 +40,10 @@ class Post extends Model implements HasRichContent, HasMedia
     public function setUpRichContent(): void
     {
         $this->registerRichContent('content')->fileAttachmentProvider(SpatieMediaLibraryFileAttachmentProvider::make());
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }
