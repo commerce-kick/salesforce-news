@@ -27,12 +27,6 @@ export default function Welcome({ posts }: { posts: IPost[] }) {
                 </InfiniteScroll>
             </section>
 
-
-             <section className="bg-accent/10 py-20 mt-16 text-center">
-
-                    <h1>No partnerts</h1>
-
-             </section>
         </Layout>
     );
 }
