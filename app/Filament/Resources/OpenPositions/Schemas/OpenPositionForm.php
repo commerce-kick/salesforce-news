@@ -56,7 +56,7 @@ class OpenPositionForm
                     ->helperText(
                         'Use your company email (e.g., hr@hyppe.cc). The company name will be extracted from the domain.',
                     )
-                    ->live(debounce: 300)
+                    ->live(debounce: 500)
                     ->afterStateUpdated(function ($state, callable $set) {
                         if ($state) {
                             $companyName = OpenPosition::extractCompanyFromEmail($state);
@@ -125,7 +125,10 @@ class OpenPositionForm
                     ->visible(fn($record) => $record !== null),
             ]),
 
-            RichEditor::make('content')->required()->columnSpanFull(),
+            RichEditor::make('content')
+                ->required()
+                ->columnSpanFull()
+                ->json(),
 
             Section::make('Publication Status')
                 ->schema([
