@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use BeyondCode\Comments\Traits\HasComments;
 use Filament\Forms\Components\RichEditor\FileAttachmentProviders\SpatieMediaLibraryFileAttachmentProvider;
 use Filament\Forms\Components\RichEditor\Models\Concerns\InteractsWithRichContent;
 use Filament\Forms\Components\RichEditor\Models\Contracts\HasRichContent;
@@ -13,7 +14,7 @@ use WillVincent\LaravelUnique\HasUniqueNames;
 
 class Post extends Model implements HasRichContent, HasMedia
 {
-    use HasTags, InteractsWithRichContent, InteractsWithMedia, HasUniqueNames;
+    use HasTags, InteractsWithRichContent, InteractsWithMedia, HasUniqueNames, HasComments;
 
     protected $uniqueField = 'slug';
     protected $constraintFields = ['user_id'];

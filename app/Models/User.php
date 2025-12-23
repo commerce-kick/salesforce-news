@@ -9,13 +9,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
+use Overtrue\LaravelFollow\Traits\Followable;
+use Overtrue\LaravelFollow\Traits\Follower;
 use Spatie\LaravelPasskeys\Models\Concerns\HasPasskeys;
 use Spatie\LaravelPasskeys\Models\Concerns\InteractsWithPasskeys;
 
 class User extends Authenticatable implements FilamentUser, HasPasskeys, MustVerifyEmail
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, TwoFactorAuthenticatable, InteractsWithPasskeys;
+    use HasFactory, Notifiable, TwoFactorAuthenticatable, InteractsWithPasskeys, Follower, Followable;
 
     /**
      * The attributes that are mass assignable.
@@ -57,5 +59,10 @@ class User extends Authenticatable implements FilamentUser, HasPasskeys, MustVer
     public function canAccessPanel(Panel $panel): bool
     {
         return $this->hasVerifiedEmail();
+    }
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
     }
 }

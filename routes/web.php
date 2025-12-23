@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\FollowController;
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -41,6 +43,27 @@ Route::get('/post/{slug}', function (string $slug) {
         'htmlContent' => $html,
     ]);
 })->name('post.show');
+
+Route::get('/user/{user}', function (User $user) {
+    if (auth()->check()) {
+        $isFollowing = auth()->user()->isFollowing($user);
+    } else {
+        $isFollowing = false;
+    }
+
+    $followers = $user->followers()->limit(12)->get();
+
+    return Inertia::render('user/profile', [
+        'user' => $user,
+        'posts' => Inertia::scroll(
+            fn() => $user->posts()->published()->with(['tags', 'media', 'user'])->latest()->paginate(10),
+        ),
+        'isFollowing' => $isFollowing,
+        'followers' => $followers,
+    ]);
+})->name('user.profile');
+
+Route::post('/user/{user}/follow', FollowController::class)->name('user.follow');
 
 Route::passkeys();
 
