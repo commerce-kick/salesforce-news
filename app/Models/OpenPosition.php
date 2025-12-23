@@ -16,6 +16,16 @@ class OpenPosition extends Model implements HasRichContent, HasMedia
 {
     use InteractsWithRichContent, InteractsWithMedia, HasTags, HasUlids;
 
+    // Keep your auto-increment primary key
+    protected $primaryKey = 'id';
+    public $incrementing = true;
+
+    // Specify which columns should use ULIDs
+    public function uniqueIds(): array
+    {
+        return ['ulid']; // Your custom ULID column name
+    }
+
     protected $guarded = [];
 
     protected $casts = [

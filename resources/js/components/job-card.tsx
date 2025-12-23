@@ -43,7 +43,7 @@ export default function JobCard({ job }: { job: any }) {
   }
 
   return (
-    <Link href={`/job/${job.id}`}>
+    <Link href={`/job/${job.ulid}`}>
       <Card className="group relative h-full overflow-hidden border-0 bg-card shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
         {/* Image Container with Overlay */}
         <div className="relative aspect-[16/9] overflow-hidden">

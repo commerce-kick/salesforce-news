@@ -68,7 +68,9 @@ Route::get('/post/{slug}', function (string $slug) {
     ]);
 })->name('post.show');
 
-Route::get('/job/{job}', function (OpenPosition $job) {
+Route::get('/job/{ulid}', function (string $ulid) {
+    $job = OpenPosition::where('ulid', $ulid)->firstOrFail();
+
     $html = $job->renderRichContent('content');
 
     return Inertia::render('jobs/show', [

@@ -11,7 +11,9 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('open_positions', function (Blueprint $table) {
-            $table->ulid('id')->primary();
+            $table->id();
+            $table->ulid('ulid')->unique();
+
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->string('title');
             $table->jsonb('content')->nullable();
