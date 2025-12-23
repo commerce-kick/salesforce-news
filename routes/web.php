@@ -34,8 +34,11 @@ Route::get('/', function (Request $request) {
 Route::get('/post/{slug}', function (string $slug) {
     $post = Post::where('slug', $slug)->firstOrFail();
 
+    $html = $post->renderRichContent('content');
+
     return Inertia::render('post/show', [
         'post' => $post->load(['user', 'tags', 'media']),
+        'htmlContent' => $html,
     ]);
 })->name('post.show');
 

@@ -19,7 +19,7 @@ export default function Welcome({ posts }: { posts: IPost[] }) {
             </section>
             <section className="container mx-auto mt-8 max-w-screen-2xl px-4 md:px-6">
                 <InfiniteScroll data="posts">
-                    <div className="grid gap-x-8 gap-y-12 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                    <div className="grid gap-x-8 gap-y-12  md:grid-cols-3 lg:grid-cols-4">
                         {posts?.data?.map((post) => (
                             <PostCard key={post.id} post={post} />
                         ))}
