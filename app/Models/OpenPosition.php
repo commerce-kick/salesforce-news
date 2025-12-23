@@ -26,11 +26,26 @@ class OpenPosition extends Model implements HasRichContent, HasMedia
         return ['ulid']; // Your custom ULID column name
     }
 
-    protected $guarded = [];
+    protected $fillable = [
+        'ulid',
+        'user_id',
+        'title',
+        'content',
+        'location',
+        'job_type',
+        'salary',
+        'company_name',
+        'company_email',
+        'email_verified_at',
+        'otp_code',
+        'otp_expires_at',
+        'status',
+    ];
 
     protected $casts = [
         'email_verified_at' => 'datetime',
         'otp_expires_at' => 'datetime',
+        'content' => 'array',
     ];
 
     const STATUS_DRAFT = 'draft';
