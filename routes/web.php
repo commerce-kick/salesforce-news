@@ -1,13 +1,13 @@
 <?php
 
 use App\Http\Controllers\FollowController;
+use App\Models\OpenPosition;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use Laravel\Fortify\Features;
 
 Route::get('/', function (Request $request) {
     $category = $request->query('category');
@@ -24,7 +24,7 @@ Route::get('/', function (Request $request) {
                     $tag,
                 )))
                 ->latest()
-                ->paginate(10), // 2 is too small, use 10-15
+                ->paginate(), // 2 is too small, use 10-15
         ),
         'filters' => [
             'category' => $category,
@@ -32,6 +32,30 @@ Route::get('/', function (Request $request) {
         ],
     ]);
 })->name('home');
+
+Route::get('/jobs', function (Request $request) {
+    $category = $request->query('category');
+    $tag = $request->query('tag');
+
+    return Inertia::render('jobs/index', [
+        'jobs' => Inertia::scroll(
+            fn() => OpenPosition::query()
+                ->published()
+                ->with(['user', 'tags', 'media']) // Select only needed columns
+                ->when($category, fn(Builder $query) => $query->where('category', $category))
+                ->when($tag, fn(Builder $query) => $query->whereHas('tags', fn(Builder $q) => $q->where(
+                    'slug->en',
+                    $tag,
+                )))
+                ->latest()
+                ->paginate(), // 2 is too small, use 10-15
+        ),
+        'filters' => [
+            'category' => $category,
+            'tag' => $tag,
+        ],
+    ]);
+})->name('jobs');
 
 Route::get('/post/{slug}', function (string $slug) {
     $post = Post::where('slug', $slug)->firstOrFail();
@@ -43,6 +67,15 @@ Route::get('/post/{slug}', function (string $slug) {
         'htmlContent' => $html,
     ]);
 })->name('post.show');
+
+Route::get('/job/{job}', function (OpenPosition $job) {
+    $html = $job->renderRichContent('content');
+
+    return Inertia::render('jobs/show', [
+        'job' => $job->load(['user', 'tags', 'media']),
+        'htmlContent' => $html,
+    ]);
+})->name('jobs.show');
 
 Route::get('/user/{user}', function (User $user) {
     if (auth()->check()) {

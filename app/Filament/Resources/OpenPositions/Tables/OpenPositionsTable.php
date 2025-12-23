@@ -1,0 +1,64 @@
+<?php
+
+namespace App\Filament\Resources\OpenPositions\Tables;
+
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Table;
+
+class OpenPositionsTable
+{
+    public static function configure(Table $table): Table
+    {
+        return $table
+            ->columns([
+                TextColumn::make('user_id')
+                    ->numeric()
+                    ->sortable(),
+                TextColumn::make('title')
+                    ->searchable(),
+                TextColumn::make('location')
+                    ->searchable(),
+                TextColumn::make('job_type')
+                    ->searchable(),
+                TextColumn::make('salary')
+                    ->numeric()
+                    ->sortable(),
+                TextColumn::make('company_name')
+                    ->searchable(),
+                TextColumn::make('company_email')
+                    ->searchable(),
+                TextColumn::make('email_verified_at')
+                    ->dateTime()
+                    ->sortable(),
+                TextColumn::make('otp_code')
+                    ->searchable(),
+                TextColumn::make('otp_expires_at')
+                    ->dateTime()
+                    ->sortable(),
+                TextColumn::make('status')
+                    ->searchable(),
+                TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+            ])
+            ->filters([
+                //
+            ])
+            ->recordActions([
+                EditAction::make(),
+            ])
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
+                ]),
+            ]);
+    }
+}

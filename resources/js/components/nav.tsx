@@ -63,21 +63,26 @@ export default function Nav({
                             {category}
                         </Button>
                     ))}
+                    <Button
+                        variant="outline"
+                        className="uppercase"
+                        asChild
+                    >
+                        <Link href="/jobs">Jobs</Link>
+                    </Button>
                 </nav>
 
                 {/* Desktop Auth Buttons */}
                 <div className="hidden items-center gap-2 md:flex">
-                     <Button
-                                    variant="outline"
-                                    className="w-full bg-transparent"
-                                    asChild
-                                >
-                                    <a href={Login.url()}>
-                                        {isAuthenticated
-                                            ? 'Dashboard'
-                                            : 'Register'}
-                                    </a>
-                                </Button>
+                    <Button
+                        variant="outline"
+                        className="w-full bg-transparent"
+                        asChild
+                    >
+                        <a href={Login.url()}>
+                            {isAuthenticated ? 'Dashboard' : 'Register'}
+                        </a>
+                    </Button>
                 </div>
 
                 {/* Mobile Menu */}
